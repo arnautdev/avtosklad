@@ -8,12 +8,13 @@
     ],
     "autoload": {
         "psr-4": {
-          "Framework\\": "framework/",
-          "App\\": "app/",
-          "Api\\": "api/"
+            "Framework\\": "framework/",
+            "App\\": "app/",
+            "Api\\": "api/"
         }
     },
     "require": {
-        "illuminate/events": "^7.14"
+        "illuminate/database": "^5.1",
+        "robmorgan/phinx": "^0.4.4"
     }
 }
