@@ -6,14 +6,18 @@
  * Time: 10:41 AM
  */
 
-namespace App\controllers;
+namespace App\controller;
 
 
 class DefaultController extends AppController
 {
 
+    /**
+     *
+     */
     public function index()
     {
 
+        $this->render('index');
     }
 }
