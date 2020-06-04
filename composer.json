@@ -1,0 +1,12 @@
+{
+    "name": "credissimo/avtosklad",
+    "authors": [
+        {
+            "name": "dmitryArnaut",
+            "email": "dmitrii.arnaut@gmail.com"
+        }
+    ],
+    "require": {
+        "illuminate/events": "^7.14"
+    }
+}
