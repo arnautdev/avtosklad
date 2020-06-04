@@ -15,12 +15,19 @@ class AppController
      */
     public $layout = 'default';
 
+    /**
+     * @var bool
+     */
+    public $checkAuth = true;
 
     /**
      * AppController constructor.
      */
     public function __construct()
     {
+        if (!session()->has('user') && $this->checkAuth) {
+//            return request()->redirectTo('user/login');
+        }
     }
 
     /**

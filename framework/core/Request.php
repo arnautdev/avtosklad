@@ -21,6 +21,37 @@ class Request
 
 
     /**
+     * @param string $url
+     */
+    public function url($url = '')
+    {
+        return $this->basePath() . $url;
+    }
+
+
+    /**
+     * @param string $url
+     */
+    public function redirectTo($url = '')
+    {
+        if (is_array($url)) {
+            $url = implode('/', $url);
+        }
+
+        $path = $this->basePath();
+
+        return header('Location: ' . $path . $url);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function basePath()
+    {
+        return str_replace('index.php', '', $this->server('SCRIPT_NAME'));
+    }
+
+    /**
      * Get server vars
      * @param null $key
      * @return bool

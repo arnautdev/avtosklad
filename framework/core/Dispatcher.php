@@ -28,7 +28,7 @@ class Dispatcher
      */
     public function run()
     {
-        $controller = 'App\\controllers\\' . $this->getController() . 'Controller';
+        $controller = 'App\\controller\\' . $this->getController() . 'Controller';
         $action = $this->getAction();
 
         if (!class_exists($controller)) {

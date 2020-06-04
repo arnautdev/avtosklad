@@ -14,6 +14,6 @@ if (!function_exists('session')) {
 
     function session()
     {
-        return new \Illuminate\Support\Facades\Session();
+        return new \Symfony\Component\HttpFoundation\Session\Session();
     }
 }
