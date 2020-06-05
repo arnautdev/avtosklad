@@ -22,6 +22,20 @@ class Dispatcher
      */
     public $args = [];
 
+    /**
+     * @var string
+     */
+    public $namespace = null;
+
+    /**
+     * Dispatcher constructor.
+     * @param string $namespace
+     */
+    public function __construct($namespace = '')
+    {
+        $this->namespace = $namespace;
+    }
+
 
     /**
      * @throws \Exception
@@ -29,6 +43,11 @@ class Dispatcher
     public function run()
     {
         $controller = 'App\\controller\\' . $this->getController() . 'Controller';
+        /// when calling from api change controller namespace
+        if (!is_null($this->namespace)) {
+            $controller = 'Api\\controller\\' . $this->getController() . 'Controller';
+        }
+
         $action = $this->getAction();
 
         if (!class_exists($controller)) {

@@ -1,11 +1,11 @@
 paths:
-    migrations: %%PHINX_CONFIG_DIR%%/migrations
+    migrations: %%PHINX_CONFIG_DIR%%/data/migrations
 
 environments:
     default_migration_table: phinxlog
     default_database: development
     production:
-        adapter: pgsql
+        adapter: mysql
         host: localhost
         name: production_db
         user: root
@@ -14,7 +14,7 @@ environments:
         charset: utf8
 
     development:
-        adapter: pgsql
+        adapter: mysql
         host: localhost
         name: avtosklad
         user: root
@@ -23,7 +23,7 @@ environments:
         charset: utf8
 
     testing:
-        adapter: pgsql
+        adapter: mysql
         host: localhost
         name: testing_db
         user: root

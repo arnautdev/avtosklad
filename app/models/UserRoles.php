@@ -12,4 +12,10 @@ namespace App\models;
 class UserRoles extends AppModel
 {
 
+    /**
+     * @var array
+     */
+    public $fillable = [
+        'name',
+    ];
 }

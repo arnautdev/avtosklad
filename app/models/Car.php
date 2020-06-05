@@ -8,9 +8,30 @@
 
 namespace App\models;
 
+use App\models\CarStore;
 
 class Car extends AppModel
 {
 
-    
+    /**
+     * @var array
+     */
+    public $fillable = [
+        'id',
+        'brand',
+        'model',
+        'issueYear',
+        'equipment',
+        'technicalSpecifications',
+    ];
+
+
+    /**
+     * Get car store
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function getCarStore()
+    {
+        return $this->hasOne(CarStore::class, 'carId', 'id');
+    }
 }
