@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateCarTable extends AbstractMigration
+class CreateTableUserRolesRel extends AbstractMigration
 {
     /**
      * Change Method.
@@ -27,24 +27,15 @@ class CreateCarTable extends AbstractMigration
      */
     public function change()
     {
-        $this->table('car')
+        $this->table('user_roles_rel')
             ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('modified', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('isDeleted', 'enum', ['null' => false, 'default' => 'no', 'values' => ['yes', 'no']])
-
-            ->addColumn('brand', 'string', ['limit' => 500, 'null' => false])
-            ->addColumn('model', 'string', ['limit' => 500, 'null' => false])
-            ->addColumn('issueYear', 'date', ['null' => false])
-            ->addColumn('equipment', 'text', ['null' => false])
-            ->addColumn('technicalSpecifications', 'text', ['null' => false])
-            ->addColumn('status', 'enum', ['null' => false, 'values' => ['instock', 'sold', 'waitingDelivery'], 'default' => 'instock'])
-            ->addIndex(['brand', 'model', 'issueYear'])
+            ->addColumn('userId', 'integer', ['null' => false])
+            ->addColumn('roleId', 'integer', ['null' => false])
+            ->addColumn('isActive', 'enum', ['null' => false, 'default' => 'yes', 'values' => ['yes', 'no']])
+            ->addForeignKey('userId','users','id')
+            ->addForeignKey('roleId','user_roles','id')
             ->create();
-    }
-
-
-    public function down()
-    {
-        $this->table('car')->drop();
     }
 }

@@ -9,6 +9,8 @@
 namespace App\controller;
 
 
+use Rakit\Validation\Validator;
+
 class UserController extends AppController
 {
     /**
@@ -23,8 +25,17 @@ class UserController extends AppController
      */
     public function login()
     {
+        if (request()->isPost()) {
+            $validator = new Validator();
+            $validation = $validator->make($_POST, [
+                'email' => 'required|min:16',
+                'password' => 'required|min:6',
+            ]);
+            $validation->validate();
 
-        
+            $data = $validation->getValidData();
+        }
+
         return $this->render('login');
     }
 

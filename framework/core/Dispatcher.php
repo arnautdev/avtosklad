@@ -31,7 +31,7 @@ class Dispatcher
      * Dispatcher constructor.
      * @param string $namespace
      */
-    public function __construct($namespace = '')
+    public function __construct($namespace = null)
     {
         $this->namespace = $namespace;
     }

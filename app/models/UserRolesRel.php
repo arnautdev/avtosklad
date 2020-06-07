@@ -17,6 +17,7 @@ class UserRolesRel extends AppModel
     public $fillable = [
         'userId',
         'roleId',
+        'isActive',
     ];
 
     /**

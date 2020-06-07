@@ -24,4 +24,17 @@ class User extends AppModel
     {
         return $this->hasMany(UserRolesRel::class, 'userId', 'id');
     }
+
+
+    /**
+     * @return bool
+     */
+    public function hasRole()
+    {
+        $row = $this->belongsTo(UserRolesRel::class, 'userId', 'id')
+            ->where('isActive', '=', 'yes')
+            ->first();
+
+        return $row->exists();
+    }
 }

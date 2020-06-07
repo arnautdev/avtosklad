@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateCarTable extends AbstractMigration
+class CreateTableUserRoles extends AbstractMigration
 {
     /**
      * Change Method.
@@ -27,24 +27,12 @@ class CreateCarTable extends AbstractMigration
      */
     public function change()
     {
-        $this->table('car')
+        $this->table('user_roles')
             ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('modified', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('isDeleted', 'enum', ['null' => false, 'default' => 'no', 'values' => ['yes', 'no']])
 
-            ->addColumn('brand', 'string', ['limit' => 500, 'null' => false])
-            ->addColumn('model', 'string', ['limit' => 500, 'null' => false])
-            ->addColumn('issueYear', 'date', ['null' => false])
-            ->addColumn('equipment', 'text', ['null' => false])
-            ->addColumn('technicalSpecifications', 'text', ['null' => false])
-            ->addColumn('status', 'enum', ['null' => false, 'values' => ['instock', 'sold', 'waitingDelivery'], 'default' => 'instock'])
-            ->addIndex(['brand', 'model', 'issueYear'])
+            ->addColumn('name', 'string', ['null' => false])
             ->create();
-    }
-
-
-    public function down()
-    {
-        $this->table('car')->drop();
     }
 }

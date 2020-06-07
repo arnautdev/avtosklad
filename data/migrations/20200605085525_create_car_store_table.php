@@ -27,18 +27,19 @@ class CreateCarStoreTable extends AbstractMigration
      */
     public function change()
     {
-        $sql = <<<SQL
-CREATE TABLE `carStore` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `carId` INT(10) NOT NULL,
-  `availableCount` VARCHAR(45) NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `fk_carStore_1`
-    FOREIGN KEY (`carId`)
-    REFERENCES `car` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION);
-SQL;
-        $this->execute($sql);
+        $this->table('carStore')
+            ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('modified', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('isDeleted', 'enum', ['null' => false, 'default' => 'no', 'values' => ['yes', 'no']])
+
+            ->addColumn('carId', 'integer', ['null' => false])
+            ->addColumn('availableCount', 'integer', ['null' => false])
+            ->addForeignKey('carId', 'car','id')
+            ->create();
+    }
+
+    public function down()
+    {
+        $this->table('carStore')->drop();
     }
 }

@@ -19,6 +19,17 @@ class Request
         $this->request = $_REQUEST;
     }
 
+    /**
+     * Check if request is post
+     * @return bool
+     */
+    public function isPost()
+    {
+        if ($this->method() == 'POST') {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * @param string $url

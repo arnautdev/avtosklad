@@ -27,15 +27,19 @@ class CreateUserTable extends AbstractMigration
      */
     public function change()
     {
-        $sql = <<<SQL
-        CREATE TABLE `users` (
-  `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(100) NULL,
-  `email` VARCHAR(45) NOT NULL,
-  `password` VARCHAR(100) NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC));
-SQL;
-        $this->execute($sql);
+        $this->table('users')
+            ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('modified', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('isDeleted', 'enum', ['null' => false, 'default' => 'no', 'values' => ['yes', 'no']])
+            ->addColumn('name', 'string', ['null' => false])
+            ->addColumn('email', 'string', ['null' => false])
+            ->addIndex('email', ['unique' => true])
+            ->addColumn('password', 'string', ['null' => false])
+            ->create();
+    }
+
+    public function down()
+    {
+        $this->table('users')->drop();
     }
 }
