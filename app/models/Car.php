@@ -17,7 +17,6 @@ class Car extends AppModel
      * @var array
      */
     public $fillable = [
-        'id',
         'brand',
         'model',
         'issueYear',
@@ -25,6 +24,22 @@ class Car extends AppModel
         'technicalSpecifications',
     ];
 
+    /**
+     *
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        /// on before save json-encode (technicalSpecifications)
+        static::saving(function ($model) {
+            if (!is_array($model->technicalSpecifications)) {
+                $model->technicalSpecifications = [$model->technicalSpecifications];
+            }
+            
+            $model->technicalSpecifications = json_encode($model->technicalSpecifications);
+        });
+    }
 
     /**
      * Get car store

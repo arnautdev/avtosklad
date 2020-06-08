@@ -28,8 +28,8 @@ class CreateUserTable extends AbstractMigration
     public function change()
     {
         $this->table('users')
-            ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('modified', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('isDeleted', 'enum', ['null' => false, 'default' => 'no', 'values' => ['yes', 'no']])
             ->addColumn('name', 'string', ['null' => false])
             ->addColumn('email', 'string', ['null' => false])

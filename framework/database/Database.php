@@ -1,21 +1,14 @@
 <?php
 
-namespace App\models;
+namespace Framework\database;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
-class AppModel extends Model
+class Database
 {
 
-    /**
-     * AppModel constructor.
-     * @param array $attributes
-     */
-    public function __construct(array $attributes = [])
+    public function __construct()
     {
-        parent::__construct($attributes);
-
         $capsule = new Capsule();
         $capsule->addConnection([
             'driver' => 'mysql',
@@ -27,8 +20,6 @@ class AppModel extends Model
             'collation' => 'utf8_general_ci',
         ]);
 
-        $capsule->setAsGlobal();
         $capsule->bootEloquent();
     }
-
 }

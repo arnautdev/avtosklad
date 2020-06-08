@@ -9,6 +9,7 @@
 namespace App\controller;
 
 
+use App\models\User;
 use Rakit\Validation\Validator;
 
 class UserController extends AppController
@@ -32,8 +33,22 @@ class UserController extends AppController
                 'password' => 'required|min:6',
             ]);
             $validation->validate();
+            if ($validation->fails()) {
+                $this->vars['errors'] = $validation->errors();
+                return $this->render('login');
+            }
 
+
+            /// login user
             $data = $validation->getValidData();
+            $user = (new User())->getUser($data);
+            if (!$user) {
+                $this->vars['errors'] = ['Invalid user or password'];
+                return $this->render('login');
+            }
+
+            session()->set('user', $user);
+            return request()->redirectTo('/');
         }
 
         return $this->render('login');

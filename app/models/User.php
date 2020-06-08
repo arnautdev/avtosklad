@@ -4,6 +4,7 @@
 namespace App\models;
 
 use App\models\UserRolesRel;
+use Illuminate\Support\Facades\Hash;
 
 class User extends AppModel
 {
@@ -36,5 +37,42 @@ class User extends AppModel
             ->first();
 
         return $row->exists();
+    }
+
+
+    /**
+     * @param $roleId
+     * @return bool
+     */
+    public function assignRole($roleId)
+    {
+        $row = UserRolesRel::create([
+            'userId' => $this->id,
+            'roleId' => $roleId,
+            'isActive' => 'yes'
+        ]);
+
+        if (!is_null($row)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * @param array $args
+     * @return bool
+     */
+    public function getUser($args = [])
+    {
+        if (!isset($args['email']) || !isset($args['password'])) {
+            return false;
+        }
+
+        $row = $this->where('email', '=', $args['email'])->first();
+        if (!is_null($row) && password_verify($args['password'], $row->password)) {
+            return $row;
+        }
+        return false;
     }
 }

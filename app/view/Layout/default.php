@@ -31,14 +31,25 @@
                 </li>
             </ul>
             <ul class="navbar-nav pull-right">
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo request()->url('user/login'); ?>">Login / Register</a>
-                </li>
+                <?php if (!session()->has('user')) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo request()->url('user/login'); ?>">Login / Register</a>
+                    </li>
+                <?php } else { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <?php echo session()->get('user')->name; ?>
+                        </a>
+                    </li>
+                <?php } ?>
             </ul>
 
         </div>
     </nav>
 
+    <?php if (isset($errors)) { ?>
+        <pre><?php echo var_dump($errors); ?></pre>
+    <?php } ?>
 
     <?php echo $contentForLayout; ?>
 </main>

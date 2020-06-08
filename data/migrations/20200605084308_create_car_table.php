@@ -27,17 +27,18 @@ class CreateCarTable extends AbstractMigration
      */
     public function change()
     {
-        $this->table('car')
-            ->addColumn('created', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('modified', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+        $this->table('cars')
+            ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
+            ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('isDeleted', 'enum', ['null' => false, 'default' => 'no', 'values' => ['yes', 'no']])
-
             ->addColumn('brand', 'string', ['limit' => 500, 'null' => false])
             ->addColumn('model', 'string', ['limit' => 500, 'null' => false])
             ->addColumn('issueYear', 'date', ['null' => false])
             ->addColumn('equipment', 'text', ['null' => false])
             ->addColumn('technicalSpecifications', 'text', ['null' => false])
             ->addColumn('status', 'enum', ['null' => false, 'values' => ['instock', 'sold', 'waitingDelivery'], 'default' => 'instock'])
+            ->addColumn('addedByAdminId', 'integer')
+            ->addForeignKey('addedByAdminId', 'users', 'id')
             ->addIndex(['brand', 'model', 'issueYear'])
             ->create();
     }

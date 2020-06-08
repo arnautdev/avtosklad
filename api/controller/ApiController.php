@@ -15,6 +15,12 @@ class ApiController
     private $request;
 
     /**
+     * @var bool
+     */
+    public $checkAuth = true;
+
+
+    /**
      * ApiController constructor.
      */
     public function __construct()
@@ -22,6 +28,11 @@ class ApiController
         $method = request()->method();
         if ($method !== 'POST') {
             return $this->throwError(100, 'Request method is not valid');
+        }
+
+
+        if ($this->checkAuth && !session()->has('userKey')) {
+            return $this->throwError(100, 'Invalid JWT token');
         }
 
 

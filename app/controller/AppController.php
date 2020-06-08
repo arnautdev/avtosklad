@@ -25,8 +25,8 @@ class AppController
      */
     public function __construct()
     {
-        if (!session()->has('user') && $this->checkAuth) {
-//            return request()->redirectTo('user/login');
+        if ($this->checkAuth && !session()->has('user')) {
+            return request()->redirectTo('user/login');
         }
     }
 
