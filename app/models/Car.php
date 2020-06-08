@@ -22,6 +22,8 @@ class Car extends AppModel
         'issueYear',
         'equipment',
         'technicalSpecifications',
+        'status',
+        'addedByAdminId',
     ];
 
     /**

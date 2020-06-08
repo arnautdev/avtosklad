@@ -19,10 +19,10 @@ class AppModel extends Model
         $capsule = new Capsule();
         $capsule->addConnection([
             'driver' => 'mysql',
-            'host' => 'localhost',
+            'host' => '127.0.0.1',
             'database' => 'avtosklad',
             'username' => 'root',
-            'password' => 'none',
+            'password' => 'rootnone',
             'charset' => 'utf8',
             'collation' => 'utf8_general_ci',
         ]);
