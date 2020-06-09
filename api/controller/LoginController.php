@@ -4,7 +4,7 @@ namespace Api\controller;
 
 
 use App\models\User;
-use Illuminate\Support\Facades\Validator;
+use Rakit\Validation\Validator;
 
 class LoginController extends ApiController
 {
@@ -29,10 +29,22 @@ class LoginController extends ApiController
         /// check valid data
         /// if not return errors
         if ($validation->fails()) {
-            $errors = $validation->errors();
-            return $this->returnResponse($errors, 200);
+            $data['errors'] = $validation->errors()->all();
+            return $this->returnResponse($data);
         }
 
         $data = $validation->getValidData();
+        $user = (new User())->getUser($data);
+        if (!$user) {
+            $this->throwError(2000, ['Invalid credentials']);
+        }
+
+        $jwt = $this->createJwtToken($user);
+
+
+        return $this->returnResponse([
+            'user' => $user,
+            'jwt' => $jwt
+        ]);
     }
 }

@@ -10,10 +10,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 // require core.helpers
 require_once(__DIR__ . '/framework/helpers/core.helpers.php');
 
-/// define vars
-define('ROOT', __DIR__);
-
-define('VIEWS', __DIR__ . '/app/view/');
+require_once(__DIR__ . '/app/config/config.php');
 
 try {
     $dispatcher = new \Framework\core\Dispatcher();

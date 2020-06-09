@@ -4,12 +4,13 @@ namespace App\controller;
 
 
 use App\traits\CurlAwareTrait;
+use App\traits\UtilsAwareTrait;
 use Rakit\Validation\Validator;
 
 class CarsController extends AppController
 {
 
-    use CurlAwareTrait;
+    use CurlAwareTrait, UtilsAwareTrait;
 
     /**
      *
@@ -21,6 +22,9 @@ class CarsController extends AppController
     }
 
 
+    /**
+     * Create car
+     */
     public function create()
     {
         if (request()->isPost()) {
@@ -40,6 +44,19 @@ class CarsController extends AppController
                 $this->vars['erros'] = $validation->errors();
                 return $this->render('create');
             }
+
+            /// get valid data
+            $data = $validation->getValidData();
+            $data['issueYear'] = $this->sqlDate($data['issueYear'])->format('Y-m-d');
+
+            $request = request()->apiUrl('login');
+            $resp = $this->curlExec($request, [
+                'email' => 'dmitrii.arnaut@gmail.com',
+                'password' => 'dmitrii.arnaut@gmail.com'
+            ]);
+            $resp = json_decode($resp);
+            var_dump(__METHOD__);
+            die(var_dump($resp));
         }
 
         return $this->render('create');

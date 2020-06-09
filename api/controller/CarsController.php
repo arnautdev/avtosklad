@@ -14,13 +14,14 @@ class CarsController extends ApiController
 
     public function index()
     {
-        
+
     }
 
 
     public function create()
     {
 
+        return $this->returnResponse(['data' => 'asdf']);
     }
 
 

@@ -9,10 +9,12 @@
 namespace Api\controller;
 
 
+use Firebase\JWT\JWT;
+
 class ApiController
 {
 
-    private $request;
+    protected $request;
 
     /**
      * @var bool
@@ -27,25 +29,42 @@ class ApiController
     {
         $method = request()->method();
         if ($method !== 'POST') {
-            return $this->throwError(100, 'Request method is not valid');
+            return $this->throwError(INVALID_REQEUST, 'Request method is not valid');
         }
 
 
         if ($this->checkAuth && !session()->has('userKey')) {
-            return $this->throwError(100, 'Invalid JWT token');
+            return $this->throwError(INVALID_JWT_TOKEN, 'Invalid JWT token');
         }
 
 
         $handler = fopen('php://input', 'r');
-        $request = stream_get_contents($handler);
+        $this->request = stream_get_contents($handler);
     }
 
     /**
      * Create JWT token
+     * @param $user
+     * @return string
      */
-    public function generateToken()
+    protected function createJwtToken($user)
     {
+        $iat = time();
+        $nbf = ($iat + 10);
+        $exp = ($iat + 30);
+        $payloadInfo = [
+            'iss' => request()->server('HTTP_HOST'),
+            'iat' => time(),
+            'nbf' => $nbf,
+            'exp' => $exp,
+            'aud' => 'api',
+            'user' => [
+                'name' => $user->name,
+                'email' => $user->email,
+            ]
+        ];
 
+        return JWT::encode($payloadInfo, 'owt125');
     }
 
     /**
@@ -62,7 +81,8 @@ class ApiController
             'code' => $code,
             'errorMessage' => $errorMsg
         ];
-        return print(json_encode($resp));
+        print(json_encode($resp));
+        exit();
     }
 
 
@@ -71,12 +91,14 @@ class ApiController
      * @param int $code
      * @return int
      */
-    public function returnResponse($data, $code = 200)
+    public function returnResponse($iData, $code = 200)
     {
         header('Content-type: application/json');
 
         $data['status'] = true;
         $data['code'] = $code;
-        return print(json_encode($data));
+        $data = array_merge($data, $iData);
+        print(json_encode($data));
+        exit();
     }
 }

@@ -34,9 +34,23 @@ class Request
     /**
      * @param string $url
      */
-    public function url($url = '')
+    public function url($url = '', $includeHost = false)
     {
+        if ($includeHost) {
+            return 'http://' . $this->server('HTTP_HOST') . $this->basePath() . $url;
+        }
+
         return $this->basePath() . $url;
+    }
+
+
+    /**
+     * @param string $url
+     * @return string
+     */
+    public function apiUrl($url = '')
+    {
+        return API_HOST . '/' . $url;
     }
 
 
