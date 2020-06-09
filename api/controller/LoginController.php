@@ -36,7 +36,7 @@ class LoginController extends ApiController
         $data = $validation->getValidData();
         $user = (new User())->getUser($data);
         if (!$user) {
-            $this->throwError(2000, ['Invalid credentials']);
+            return $this->throwError(2000, 'Invalid credentials');
         }
 
         $jwt = $this->createJwtToken($user);

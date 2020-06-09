@@ -10,10 +10,13 @@ namespace App\controller;
 
 
 use App\models\User;
+use App\traits\CurlAwareTrait;
 use Rakit\Validation\Validator;
 
 class UserController extends AppController
 {
+    use CurlAwareTrait;
+
     /**
      * Disable check auth
      * @var bool
@@ -42,16 +45,33 @@ class UserController extends AppController
             /// login user
             $data = $validation->getValidData();
             $user = (new User())->getUser($data);
-            if (!$user) {
-                $this->vars['errors'] = ['Invalid user or password'];
-                return $this->render('login');
+
+            $endPoint = request()->apiUrl('login');
+            $resp = $this->curlExec($endPoint, $data);
+            if (isset($resp->jwt)) {
+                session()->set('jwtToken', $resp->jwt);
+                session()->set('user', $user);
+                return request()->redirectTo('/');
             }
 
-            session()->set('user', $user);
-            return request()->redirectTo('/');
+            /// show errors
+            if (isset($resp->errors)) {
+                $this->vars['errors'] = $resp->errors;
+                return $this->render('login');
+            }
         }
 
         return $this->render('login');
+    }
+
+    /**
+     *
+     */
+    public function logout()
+    {
+        session()->remove('jwtToken');
+        session()->remove('user');
+        return request()->redirectTo('/');
     }
 
 }

@@ -27,23 +27,6 @@ class Car extends AppModel
     ];
 
     /**
-     *
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        /// on before save json-encode (technicalSpecifications)
-        static::saving(function ($model) {
-            if (!is_array($model->technicalSpecifications)) {
-                $model->technicalSpecifications = [$model->technicalSpecifications];
-            }
-            
-            $model->technicalSpecifications = json_encode($model->technicalSpecifications);
-        });
-    }
-
-    /**
      * Get car store
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

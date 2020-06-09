@@ -1,10 +1,8 @@
 <?php
 
+define('VIEWS', ROOT . '/app/view/');
 
-/// define vars
-define('ROOT', __DIR__);
+define('JWT_SECRET_KEY', '0A0611B42C0DE0AD85D9791F5FE3C9A6');
 
-define('VIEWS', __DIR__ . '/app/view/');
-
-define('API_HOST', 'http://localhost:8000');
+define('API_HOST', 'http://localhost:9000');
 

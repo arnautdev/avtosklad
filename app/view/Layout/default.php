@@ -41,6 +41,11 @@
                             <?php echo session()->get('user')->name; ?>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo request()->url('user/logout'); ?>">
+                            Log Out
+                        </a>
+                    </li>
                 <?php } ?>
             </ul>
 
@@ -49,6 +54,12 @@
 
     <?php if (isset($errors)) { ?>
         <pre><?php echo var_dump($errors); ?></pre>
+    <?php } ?>
+
+    <?php if (!is_null(session()->get('flash'))) { ?>
+        <div class="alert alert-warning" role="alert">
+            <?php echo session()->get('flash'); session()->remove('flash'); ?>
+        </div><!-- ./alert alert-warning -->
     <?php } ?>
 
     <?php echo $contentForLayout; ?>

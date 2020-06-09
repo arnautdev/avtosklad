@@ -33,13 +33,31 @@ class ApiController
         }
 
 
-        if ($this->checkAuth && !session()->has('userKey')) {
+        if ($this->checkAuth && !$this->checkJwtToken()) {
             return $this->throwError(INVALID_JWT_TOKEN, 'Invalid JWT token');
         }
+    }
 
 
-        $handler = fopen('php://input', 'r');
-        $this->request = stream_get_contents($handler);
+    /**
+     * Check valid jwt token
+     * @return bool
+     */
+    public function checkJwtToken()
+    {
+        $header = getallheaders();
+        if (isset($header['Authorization'])) {
+            try {
+                $decodedData = JWT::decode($header['Authorization'], JWT_SECRET_KEY, ['HS256']);
+                if (isset($decodedData->user) && isset($decodedData->user->userId)) {
+                    session()->set('userId', $decodedData->user->userId);
+                    return true;
+                }
+            } catch (\Exception $e) {
+                return false;
+            }
+        }
+        return false;
     }
 
     /**
@@ -51,7 +69,7 @@ class ApiController
     {
         $iat = time();
         $nbf = ($iat + 10);
-        $exp = ($iat + 30);
+        $exp = ($iat + (60*24));
         $payloadInfo = [
             'iss' => request()->server('HTTP_HOST'),
             'iat' => time(),
@@ -59,12 +77,13 @@ class ApiController
             'exp' => $exp,
             'aud' => 'api',
             'user' => [
+                'userId' => $user->id,
                 'name' => $user->name,
                 'email' => $user->email,
             ]
         ];
 
-        return JWT::encode($payloadInfo, 'owt125');
+        return JWT::encode($payloadInfo, JWT_SECRET_KEY);
     }
 
     /**
@@ -77,7 +96,7 @@ class ApiController
         header('Content-type: application/json');
         $resp['status'] = true;
         $resp['code'] = $code;
-        $resp['error'] = [
+        $resp['errors'] = [
             'code' => $code,
             'errorMessage' => $errorMsg
         ];
@@ -97,6 +116,11 @@ class ApiController
 
         $data['status'] = true;
         $data['code'] = $code;
+
+        if (!is_array($iData)) {
+            $iData = [$iData];
+        }
+
         $data = array_merge($data, $iData);
         print(json_encode($data));
         exit();

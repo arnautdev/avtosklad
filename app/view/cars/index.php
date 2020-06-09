@@ -22,7 +22,19 @@
 
 
         <tbody>
-
+        <?php foreach ($cars as $car) { ?>
+            <tr>
+                <td><?php echo $car->id; ?></td>
+                <td><?php echo $car->created_at; ?></td>
+                <td><?php echo $car->created_at; ?></td>
+                <td><?php echo $car->brand; ?></td>
+                <td><?php echo $car->model; ?></td>
+                <td><?php echo $car->issueYear; ?></td>
+                <td>
+                    --
+                </td>
+            </tr>
+        <?php } ?>
         </tbody>
     </table>
 <?php } ?>

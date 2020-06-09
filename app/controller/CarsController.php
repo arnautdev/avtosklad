@@ -6,6 +6,7 @@ namespace App\controller;
 use App\traits\CurlAwareTrait;
 use App\traits\UtilsAwareTrait;
 use Rakit\Validation\Validator;
+use App\models\Car;
 
 class CarsController extends AppController
 {
@@ -18,6 +19,10 @@ class CarsController extends AppController
     public function index()
     {
 
+        $url = request()->apiUrl('cars/get');
+        $resp = $this->curlExec($url);
+
+        $this->vars['cars'] = $resp->cars;
         return $this->render('index');
     }
 
@@ -48,15 +53,16 @@ class CarsController extends AppController
             /// get valid data
             $data = $validation->getValidData();
             $data['issueYear'] = $this->sqlDate($data['issueYear'])->format('Y-m-d');
+            $data['addedByAdminId'] = session()->get('user')->id;
+            $data['technicalSpecifications'] = json_encode($data['technicalSpecifications']);
 
-            $request = request()->apiUrl('login');
-            $resp = $this->curlExec($request, [
-                'email' => 'dmitrii.arnaut@gmail.com',
-                'password' => 'dmitrii.arnaut@gmail.com'
-            ]);
-            $resp = json_decode($resp);
-            var_dump(__METHOD__);
-            die(var_dump($resp));
+            $url = request()->apiUrl('cars/create');
+            $resp = $this->curlExec($url, $data);
+            if (isset($resp->carId)) {
+                session()->set('flash', 'Success added car');
+                return request()->redirectTo('cars');
+            }
+
         }
 
         return $this->render('create');
