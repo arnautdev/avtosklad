@@ -13,6 +13,7 @@ require_once(__DIR__ . '/framework/helpers/core.helpers.php');
 /// define vars
 define('ROOT', __DIR__);
 require_once(__DIR__ . '/app/config/config.php');
+require_once(__DIR__ . '/app/config/error-codes.php');
 
 try {
     $dispatcher = new \Framework\core\Dispatcher();

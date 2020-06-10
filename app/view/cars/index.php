@@ -26,12 +26,23 @@
             <tr>
                 <td><?php echo $car->id; ?></td>
                 <td><?php echo $car->created_at; ?></td>
-                <td><?php echo $car->created_at; ?></td>
+                <td><?php echo $car->created_by; ?></td>
                 <td><?php echo $car->brand; ?></td>
                 <td><?php echo $car->model; ?></td>
                 <td><?php echo $car->issueYear; ?></td>
                 <td>
-                    --
+                    <?php if ($this->hasPermission('cars.update')) { ?>
+                        <a href="<?php echo request()->url('cars/edit/' . $car->id); ?>" class="btn btn-sm btn-primary">
+                            <i class="fa fa-edit"></i>
+                        </a>
+                    <?php } ?>
+
+                    <?php if ($this->hasPermission('cars.delete')) { ?>
+                        <a href="<?php echo request()->url('cars/delete/' . $car->id); ?>"
+                           class="btn btn-sm btn-danger">
+                            <i class="fa fa-trash-o"></i>
+                        </a>
+                    <?php } ?>
                 </td>
             </tr>
         <?php } ?>

@@ -9,11 +9,17 @@
 namespace Api\controller;
 
 
+use App\models\User;
+use App\traits\AclAwareTrait;
 use Firebase\JWT\JWT;
 
 class ApiController
 {
+    use AclAwareTrait;
 
+    /**
+     * @var
+     */
     protected $request;
 
     /**
@@ -51,6 +57,12 @@ class ApiController
                 $decodedData = JWT::decode($header['Authorization'], JWT_SECRET_KEY, ['HS256']);
                 if (isset($decodedData->user) && isset($decodedData->user->userId)) {
                     session()->set('userId', $decodedData->user->userId);
+
+                    /// set user to session
+                    if (!session()->has('user')) {
+                        $user = User::where('id', '=', $decodedData->user->userId)->first();
+                        session()->set('user', $user);
+                    }
                     return true;
                 }
             } catch (\Exception $e) {
@@ -68,8 +80,8 @@ class ApiController
     protected function createJwtToken($user)
     {
         $iat = time();
-        $nbf = ($iat + 10);
-        $exp = ($iat + (60*24));
+        $nbf = time();
+        $exp = ($iat + (60 * 24));
         $payloadInfo = [
             'iss' => request()->server('HTTP_HOST'),
             'iat' => time(),

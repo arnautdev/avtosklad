@@ -34,4 +34,13 @@ class Car extends AppModel
     {
         return $this->hasOne(CarStore::class, 'carId', 'id');
     }
+
+    /**
+     * Get user
+     * @return \Illuminate\Database\Eloquent\Model|null|object|static
+     */
+    public function getUser()
+    {
+        return $this->belongsTo(User::class, 'addedByAdminId', 'id');
+    }
 }

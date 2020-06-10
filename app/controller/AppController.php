@@ -2,8 +2,12 @@
 
 namespace App\controller;
 
+use App\traits\AclAwareTrait;
+
 class AppController
 {
+    use AclAwareTrait;
+
     /**
      * View vars
      * @var array

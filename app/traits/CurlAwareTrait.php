@@ -26,6 +26,10 @@ trait CurlAwareTrait
         }
 
         $curl->post($endPoint, $jsonRequest);
+        if ($curl->error) {
+            session()->set('flash', $curl->getErrorMessage());
+        }
+
 //        die(var_dump($curl));
         $resp = json_decode($curl->getResponse());
         if (isset($resp->errors) && $resp->errors->errorMessage == 'Invalid JWT token') {
@@ -33,6 +37,14 @@ trait CurlAwareTrait
             session()->remove('jwtToken');
             return request()->redirectTo('');
         }
+
+        /// check permission validate
+        if ($resp->code == INVALID_PERMISSION) {
+            session()->set('flash', $resp->errors->errorMessage);
+        }
+
+
+        /// return response
         return $resp;
     }
 }

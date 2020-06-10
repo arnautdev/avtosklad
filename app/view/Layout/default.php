@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <title>Автосклад | Dmitry Arnaut</title>
 </head>
 <body>
@@ -23,12 +24,17 @@
 
         <div class="collapse navbar-collapse" id="navbarsExampleDefault">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="<?php echo request()->url('cars'); ?>">Cars</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo request()->url('cars/create'); ?>">Add car</a>
-                </li>
+                <?php if ($this->hasPermission('cars.index')) { ?>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="<?php echo request()->url('cars'); ?>">Cars</a>
+                    </li>
+                <?php } ?>
+
+                <?php if ($this->hasPermission('cars.create')) { ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?php echo request()->url('cars/create'); ?>">Add car</a>
+                    </li>
+                <?php } ?>
             </ul>
             <ul class="navbar-nav pull-right">
                 <?php if (!session()->has('user')) { ?>
@@ -58,7 +64,8 @@
 
     <?php if (!is_null(session()->get('flash'))) { ?>
         <div class="alert alert-warning" role="alert">
-            <?php echo session()->get('flash'); session()->remove('flash'); ?>
+            <?php echo session()->get('flash');
+            session()->remove('flash'); ?>
         </div><!-- ./alert alert-warning -->
     <?php } ?>
 

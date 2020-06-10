@@ -22,7 +22,7 @@ class AppModel extends Model
             'host' => '127.0.0.1',
             'database' => 'avtosklad',
             'username' => 'root',
-            'password' => 'rootnone',
+            'password' => 'none',
             'charset' => 'utf8',
             'collation' => 'utf8_general_ci',
         ]);
