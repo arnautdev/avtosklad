@@ -90,7 +90,26 @@ class CarsController extends AppController
      */
     public function delete($carId = null)
     {
+        if (intval($carId) == 0) {
+            session()->set('flash', 'Invalid car id');
+            return request()->redirectTo('cars');
+        }
 
+        $car = Car::where('id', '=', $carId)->first();
+        if (is_null($car)) {
+            session()->set('flash', 'Invalid car');
+            return request()->redirectTo('cars');
+        }
+
+        $requestUrl = request()->apiUrl('cars/delete');
+        $resp = $this->curlExec($requestUrl, [
+            'carId' => $carId
+        ]);
+
+        if (isset($resp->deleted) && $resp->deleted == true) {
+            session()->set('flash', 'Success deleted car');
+            return request()->redirectTo('cars');
+        }
     }
 
 

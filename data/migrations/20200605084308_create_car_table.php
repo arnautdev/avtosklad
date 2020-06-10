@@ -30,7 +30,7 @@ class CreateCarTable extends AbstractMigration
         $this->table('cars')
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('isDeleted', 'enum', ['null' => false, 'default' => 'no', 'values' => ['yes', 'no']])
+            ->addColumn('deleted_at', 'datetime')
             ->addColumn('brand', 'string', ['limit' => 500, 'null' => false])
             ->addColumn('model', 'string', ['limit' => 500, 'null' => false])
             ->addColumn('issueYear', 'date', ['null' => false])

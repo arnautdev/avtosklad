@@ -97,10 +97,19 @@ class CarsController extends ApiController
     }
 
     /**
+     * Delete car
      * @return int
      */
     public function delete()
     {
+        $carId = intval($_POST['carId']);
+        $car = Car::where('id', '=', $carId)->first();
+        if ($car->delete()) {
+            return $this->returnResponse([
+                'deleted' => true
+            ]);
+        }
 
+        return $this->throwError(GENERAL_ERROR, 'Something wrong');
     }
 }

@@ -30,7 +30,7 @@ class CreateCarStoreTable extends AbstractMigration
         $this->table('car_stores')
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('isDeleted', 'enum', ['null' => false, 'default' => 'no', 'values' => ['yes', 'no']])
+            ->addColumn('deleted_at', 'datetime')
             ->addColumn('carId', 'integer', ['null' => false])
             ->addColumn('availableCount', 'integer', ['null' => false])
             ->addForeignKey('carId', 'cars', 'id')

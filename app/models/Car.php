@@ -9,9 +9,11 @@
 namespace App\models;
 
 use App\models\CarStore;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Car extends AppModel
 {
+    use SoftDeletes;
 
     /**
      * @var array
