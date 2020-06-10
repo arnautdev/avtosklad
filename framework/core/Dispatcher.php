@@ -3,8 +3,12 @@
 namespace Framework\core;
 
 
+use App\traits\AclAwareTrait;
+
 class Dispatcher
 {
+    use AclAwareTrait;
+
     private $phSelf = [];
 
     /**
@@ -56,6 +60,17 @@ class Dispatcher
 
         $args = $this->getArgs();
         $controller = new $controller();
+
+        /// check for permissions
+        $permissionController = strtolower($this->getController());
+        $permission = $permissionController . '.' . $action;
+        $hasPermission = $this->hasPermission($permission);
+        if (!$hasPermission && !in_array($permissionController, ['default', 'user', 'login'])) {
+            session()->set('flash', 'You dont have access for this action: ' . $permission);
+            return request()->redirectTo('/');
+        }
+
+
         $controller->$action(...$args);
     }
 

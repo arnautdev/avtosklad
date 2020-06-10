@@ -22,10 +22,6 @@ class CarsController extends ApiController
      */
     public function index()
     {
-        if (!$this->hasPermission('cars.index')) {
-            return $this->throwError(INVALID_PERMISSION, 'You dont have permissions for this action');
-        }
-
         $data['cars'] = Car::all()->map(function ($row) {
             $addedBy = $row->getUser()->first();
             if (!is_null($addedBy)) {
@@ -53,13 +49,13 @@ class CarsController extends ApiController
      */
     public function create()
     {
-        if (!$this->hasPermission('cars.create')) {
-            return $this->throwError(INVALID_PERMISSION, 'You dont have permissions for this action');
-        }
-
         $data = $_POST;
         $car = Car::create($data);
         if ($car->id) {
+            $car->initStorage([
+                'availableCount' => $data['availableCount']
+            ]);
+
             return $this->returnResponse([
                 'carId' => $car->id
             ]);
@@ -70,13 +66,11 @@ class CarsController extends ApiController
 
 
     /**
+     * Update car-info
      * @return int
      */
     public function update()
     {
-        if (!$this->hasPermission('cars.update')) {
-            return $this->throwError(INVALID_PERMISSION, 'You dont have permissions for this action');
-        }
         $data = $_POST;
         if (!isset($data['carId']) || intval($data['carId']) == 0) {
             return $this->throwError(GENERAL_ERROR, 'Invalid car id');
@@ -84,6 +78,16 @@ class CarsController extends ApiController
 
         $car = Car::where('id', '=', $data['carId'])->first();
         if ($car->update($data)) {
+            $carStoreData = [
+                'availableCount' => $data['availableCount']
+            ];
+            $carStore = $car->getCarStore()->first();
+            if (is_null($carStore)) {
+                $car->initStorage($carStoreData);
+                $carStore = $car->getCarStore()->first();
+            }
+            $carStore->update($carStoreData);
+
             return $this->returnResponse([
                 'statusUpdate' => true
             ]);
@@ -97,8 +101,6 @@ class CarsController extends ApiController
      */
     public function delete()
     {
-        if (!$this->hasPermission('cars.delete')) {
-            return $this->throwError(INVALID_PERMISSION, 'You dont have permissions for this action');
-        }
+
     }
 }

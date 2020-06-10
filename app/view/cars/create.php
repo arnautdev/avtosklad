@@ -52,7 +52,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Engine</span>
                             </div>
-                            <input type="text" class="form-control" name="technicalSpecifications[engine][]" required="required"/>
+                            <input type="text" class="form-control" name="technicalSpecifications[engine]" required="required"/>
                         </div>
                     </div><!-- End ./col-2 -->
 
@@ -61,7 +61,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Doors</span>
                             </div>
-                            <input type="text" class="form-control" name="technicalSpecifications[doors][]" required="required"/>
+                            <input type="text" class="form-control" name="technicalSpecifications[doors]" required="required"/>
                         </div>
                     </div><!-- End ./col-2 -->
 
@@ -70,7 +70,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Power</span>
                             </div>
-                            <input type="text" class="form-control" name="technicalSpecifications[power][]" required="required"/>
+                            <input type="text" class="form-control" name="technicalSpecifications[power]" required="required"/>
                         </div>
                     </div><!-- End ./col-2 -->
                 </div><!-- End ./row -->
@@ -84,7 +84,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">MAxPower</span>
                             </div>
-                            <input type="text" class="form-control" name="technicalSpecifications[maxPower][]" required="required"/>
+                            <input type="text" class="form-control" name="technicalSpecifications[maxPower]" required="required"/>
                         </div>
                     </div><!-- End ./col-2 -->
 
@@ -93,7 +93,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Torque</span>
                             </div>
-                            <input type="text" class="form-control" name="technicalSpecifications[torque][]" required="required"/>
+                            <input type="text" class="form-control" name="technicalSpecifications[torque]" required="required"/>
                         </div>
                     </div><!-- End ./col-2 -->
 
@@ -102,7 +102,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="basic-addon1">Fuel System</span>
                             </div>
-                            <input type="text" class="form-control" name="technicalSpecifications[fuelSystem][]" required="required"/>
+                            <input type="text" class="form-control" name="technicalSpecifications[fuelSystem]" required="required"/>
                         </div>
                     </div><!-- End ./col-2 -->
                 </div><!-- End ./row -->

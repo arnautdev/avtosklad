@@ -14,7 +14,7 @@ trait UtilsAwareTrait
     public function sqlDate($iDate = null)
     {
         $iDate = strtotime($iDate);
-        return new \DateTime(date('Y-m-d H:i:s'));
+        return new \DateTime(date('Y-m-d H:i:s', $iDate));
     }
 
 }

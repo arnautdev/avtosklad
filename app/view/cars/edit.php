@@ -36,16 +36,22 @@
                 <div class="form-group">
                     <label for="">Status</label>
                     <select name="status" class="form-control">
-                        <option value="instock">instock</option>
-                        <option value="sold">sold</option>
-                        <option value="waitingDelivery">waitingDelivery</option>
+                        <option value="instock" <?php if ($car->status == 'instock') { ?> selected="selected" <?php } ?>>
+                            instock
+                        </option>
+                        <option value="sold" <?php if ($car->status == 'sold') { ?> selected="selected" <?php } ?>>
+                            sold
+                        </option>
+                        <option value="waitingDelivery" <?php if ($car->status == 'waitingDelivery') { ?> selected="selected" <?php } ?>>
+                            waitingDelivery
+                        </option>
                     </select>
                 </div><!-- End ./form-group -->
 
                 <div class="form-group">
                     <label for="">AvailableCount</label>
-                    <input type="number" value="1" name="availableCount" required="required" class="form-control"
-                           value="<?php echo $car->availableCount; ?>"
+                    <input type="number" name="availableCount" required="required" class="form-control"
+                           value="<?php echo $carStore->availableCount; ?>"
                     />
                 </div><!-- End ./form-group -->
 

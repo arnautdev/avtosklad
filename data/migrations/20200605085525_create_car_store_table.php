@@ -27,7 +27,7 @@ class CreateCarStoreTable extends AbstractMigration
      */
     public function change()
     {
-        $this->table('carStore')
+        $this->table('car_stores')
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('isDeleted', 'enum', ['null' => false, 'default' => 'no', 'values' => ['yes', 'no']])

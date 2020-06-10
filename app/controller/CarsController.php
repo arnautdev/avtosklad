@@ -76,7 +76,9 @@ class CarsController extends AppController
         $car = Car::where('id', '=', $carId)->first();
         if (!is_null($car)) {
             $this->vars['car'] = $car;
+            $this->vars['carStore'] = $car->getCarStore()->first();
         }
+//        var_dump($this->vars['carStore']);
 
         return $this->render('edit');
     }

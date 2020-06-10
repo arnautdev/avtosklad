@@ -43,4 +43,15 @@ class Car extends AppModel
     {
         return $this->belongsTo(User::class, 'addedByAdminId', 'id');
     }
+
+    /**
+     * @param $args
+     * @return int
+     */
+    public function initStorage($args)
+    {
+        $args['carId'] = $this->id;
+        $storage = CarStore::create($args);
+        return intval($storage->id);
+    }
 }
