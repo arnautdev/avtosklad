@@ -2,7 +2,7 @@
 
 use Phinx\Migration\AbstractMigration;
 
-class CreateUserTable extends AbstractMigration
+class CreateTableStoreHistoryLogs extends AbstractMigration
 {
     /**
      * Change Method.
@@ -27,19 +27,17 @@ class CreateUserTable extends AbstractMigration
      */
     public function change()
     {
-        $this->table('users')
+        $this->table('store_history_logs')
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('deleted_at', 'datetime', ['null' => true])
-            ->addColumn('name', 'string', ['null' => false])
-            ->addColumn('email', 'string', ['null' => false])
-            ->addIndex('email', ['unique' => true])
-            ->addColumn('password', 'string', ['null' => false])
+            ->addColumn('carId', 'integer')
+            ->addColumn('availableCount', 'integer')
+            ->addColumn('status', 'enum', ['null' => false, 'values' => ['instock', 'sold', 'waitingDelivery'], 'default' => 'instock'])
+            ->addColumn('addedByAdminId', 'integer')
+            /// add foreign keys
+            ->addForeignKey('addedByAdminId', 'users', 'id')
+            ->addForeignKey('carId', 'cars', 'id')
             ->create();
-    }
-
-    public function down()
-    {
-        $this->table('users')->drop();
     }
 }

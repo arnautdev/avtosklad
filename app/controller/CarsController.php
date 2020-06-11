@@ -70,6 +70,7 @@ class CarsController extends AppController
             $resp = $this->curlExec($url, $data);
             if (isset($resp->statusUpdate) && $resp->statusUpdate == true) {
                 session()->set('flash', 'Successfully update');
+                return request()->redirectTo('/cars/edit/' . $carId);
             }
         }
 
@@ -78,7 +79,6 @@ class CarsController extends AppController
             $this->vars['car'] = $car;
             $this->vars['carStore'] = $car->getCarStore()->first();
         }
-//        var_dump($this->vars['carStore']);
 
         return $this->render('edit');
     }

@@ -30,7 +30,7 @@ class CreateTableUserRolesRel extends AbstractMigration
         $this->table('user_roles_rels')
             ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
             ->addColumn('updated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP'])
-            ->addColumn('deleted_at', 'datetime')
+            ->addColumn('deleted_at', 'datetime', ['null' => true])
             ->addColumn('userId', 'integer', ['null' => false])
             ->addColumn('roleId', 'integer', ['null' => false])
             ->addColumn('isActive', 'enum', ['null' => false, 'default' => 'yes', 'values' => ['yes', 'no']])

@@ -19,6 +19,7 @@
         "robmorgan/phinx": "^0.4.4",
         "firebase/php-jwt": "^5.2",
         "rakit/validation": "^1.2",
-        "curl/curl": "^2.3"
+        "curl/curl": "^2.3",
+        "illuminate/events": "^5.1"
     }
 }

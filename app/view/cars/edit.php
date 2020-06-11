@@ -36,13 +36,13 @@
                 <div class="form-group">
                     <label for="">Status</label>
                     <select name="status" class="form-control">
-                        <option value="instock" <?php if ($car->status == 'instock') { ?> selected="selected" <?php } ?>>
+                        <option value="instock" <?php if ($carStore->status == 'instock') { ?> selected="selected" <?php } ?>>
                             instock
                         </option>
-                        <option value="sold" <?php if ($car->status == 'sold') { ?> selected="selected" <?php } ?>>
+                        <option value="sold" <?php if ($carStore->status == 'sold') { ?> selected="selected" <?php } ?>>
                             sold
                         </option>
-                        <option value="waitingDelivery" <?php if ($car->status == 'waitingDelivery') { ?> selected="selected" <?php } ?>>
+                        <option value="waitingDelivery" <?php if ($carStore->status == 'waitingDelivery') { ?> selected="selected" <?php } ?>>
                             waitingDelivery
                         </option>
                     </select>

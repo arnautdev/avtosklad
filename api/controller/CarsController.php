@@ -53,7 +53,8 @@ class CarsController extends ApiController
         $car = Car::create($data);
         if ($car->id) {
             $car->initStorage([
-                'availableCount' => $data['availableCount']
+                'availableCount' => $data['availableCount'],
+                'status' => $data['status'],
             ]);
 
             return $this->returnResponse([
@@ -79,7 +80,8 @@ class CarsController extends ApiController
         $car = Car::where('id', '=', $data['carId'])->first();
         if ($car->update($data)) {
             $carStoreData = [
-                'availableCount' => $data['availableCount']
+                'availableCount' => $data['availableCount'],
+                'status' => $data['status'],
             ];
             $carStore = $car->getCarStore()->first();
             if (is_null($carStore)) {

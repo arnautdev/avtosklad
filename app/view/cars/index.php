@@ -1,8 +1,7 @@
+<div class="form-group">
+    <a href="<?php echo request()->url('cars/create'); ?>" class="btn btn-sm btn-primary">Add new car</a>
+</div>
 <?php if (!isset($cars)) { ?>
-    <div class="form-group">
-        <a href="<?php echo request()->url('cars/create'); ?>" class="btn btn-sm btn-primary">Add new car</a>
-    </div>
-
     <div class="alert alert-warning" role="alert">
         No added cars
     </div>

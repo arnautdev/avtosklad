@@ -8,8 +8,8 @@
 
 namespace App\models;
 
-use App\models\CarStore;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Events\Dispatcher;
 
 class Car extends AppModel
 {
@@ -24,7 +24,7 @@ class Car extends AppModel
         'issueYear',
         'equipment',
         'technicalSpecifications',
-        'status',
+//        'status',
         'addedByAdminId',
     ];
 

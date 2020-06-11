@@ -12,9 +12,42 @@ class CarStore extends AppModel
      */
     public $fillable = [
         'carId',
-        'availableCount'
+        'availableCount',
+        'status',
     ];
 
+
+    /**
+     *
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        /// when create init log
+        static::created(function ($model) {
+            $userId = session()->get('user')->id;
+            StoreHistoryLog::create([
+                'carId' => $model->carId,
+                'availableCount' => $model->availableCount,
+                'status' => $model->status,
+                'addedByAdminId' => $userId,
+            ]);
+        });
+
+
+        static::updated(function ($model) {
+            if ($model->wasChanged(['availableCount', 'status'])) {
+                $userId = session()->get('user')->id;
+                StoreHistoryLog::create([
+                    'carId' => $model->carId,
+                    'availableCount' => $model->availableCount,
+                    'status' => $model->status,
+                    'addedByAdminId' => $userId,
+                ]);
+            }
+        });
+    }
 
     /**
      * Get car
